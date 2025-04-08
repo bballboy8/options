@@ -1,6 +1,6 @@
-# Stock Trade Stream
+# ActivFinancial Samples
 
-A Python application that streams live stock trades from Options Technology API, measures latency, and stores the data in a CSV file.
+A collection of Python samples demonstrating the usage of ActivFinancial's API for market data streaming and analysis.
 
 ## Setup
 
@@ -19,12 +19,17 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-3. Install dependencies:
+3. Install the ActivFinancial package:
+```bash
+pip install activfinancial-1.11.0-py3-none-win_amd64.whl
+```
+
+4. Install other dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Configure environment variables:
+5. Configure environment variables:
 ```bash
 cp .env.example .env
 ```
@@ -34,36 +39,55 @@ Edit the `.env` file with your API credentials and preferences.
 
 The following environment variables can be configured in the `.env` file:
 
-- `OPTIONS_API_KEY`: Your Options Technology API key
-- `OPTIONS_WS_URL`: WebSocket URL for the API (default: wss://api.options.com/stream)
-- `SYMBOLS`: Comma-separated list of stock symbols to track (default: AAPL,MSFT,GOOGL)
+- `ACTIV_API_KEY`: Your ActivFinancial API key
+- `ACTIV_WS_URL`: WebSocket URL for the API
+- `SYMBOLS`: Comma-separated list of symbols to track
 - `SAVE_INTERVAL`: Number of trades before saving to CSV (default: 100)
 
-## Usage
+## Available Samples
 
-Run the script:
+### Stock Trade Stream (`activ_sample.py`)
+A Python application that streams live stock trades from ActivFinancial API, measures latency, and stores the data in a CSV file.
+
+Run the sample:
 ```bash
-python stock_trade_stream.py
+python activ_sample.py
 ```
 
 The script will:
-1. Connect to the Options Technology WebSocket API
+1. Connect to the ActivFinancial WebSocket API
 2. Subscribe to live trade data for the configured symbols
 3. Process trades and calculate latency
 4. Save data to `stock_trades.csv` at the configured interval
 
+### Test Sample (`sample_test.py`)
+A test script demonstrating basic ActivFinancial API functionality.
+
+Run the test:
+```bash
+python sample_test.py
+```
+
 ## Output
 
-The script generates a CSV file (`stock_trades.csv`) with the following columns:
+The trade stream generates a CSV file (`stock_trades.csv`) with the following columns:
 - symbol: Stock symbol
 - price: Trade price
 - size: Trade size
 - timestamp: Trade timestamp
 - latency_ms: Latency in milliseconds
 
+## Dependencies
+
+- activfinancial==1.11.0
+- pandas>=2.2.3
+- websockets>=15.0.1
+- requests>=2.32.3
+- python-dotenv>=1.0.0
+
 ## Logging
 
-The script logs important events and errors to the console, including:
+The scripts log important events and errors to the console, including:
 - Connection status
 - Subscription confirmations
 - Trade processing statistics
