@@ -5,7 +5,11 @@
 from activfinancial import *
 from activfinancial.constants import *
 from activfinancial.samples import common
+import os
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 # This SubscriptionHandler class provides us with an interface for processing
 # the results of our subscription.
@@ -31,10 +35,13 @@ class SubscriptionHandler:
 session = Session({ FID_ENABLE_CTRL_HANDLER: True },
 				  handler=common.PrintSessionHandler())
 
-connect_parameters = {}
-#connect_parameters[FID_HOST]     = 'aop-replay.activfinancial.com'
-#connect_parameters[FID_USER_ID]  = 'user id'
-#connect_parameters[FID_PASSWORD] = 'password'
+# Get connection parameters from environment variables
+# Use variable names found in .env file
+connect_parameters = {
+    FID_HOST: os.getenv('ACTIV_SESSION_HOST', 'aop-replay.activfinancial.com'),
+    FID_USER_ID: os.getenv('ACTIV_SESSION_USER_ID', ''),
+    FID_PASSWORD: os.getenv('ACTIV_SESSION_PASSWORD', '')
+}
 
 # Connect synchronously.
 session.connect(connect_parameters)
